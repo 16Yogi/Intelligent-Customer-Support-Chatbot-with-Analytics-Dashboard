@@ -1,0 +1,5 @@
+{
+  "name": "AI Chat & Analytics Hub",
+  "description": "A real-time AI chat application with a comprehensive admin dashboard for monitoring query volume, success rates, and user satisfaction.",
+  "requestFramePermissions": []
+}

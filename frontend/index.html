@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+    <script>
+      // Polyfill 'global' and handle 'fetch' assignment issues in some environments
+      (function() {
+        // Force dark mode
+        document.documentElement.classList.add('dark');
+        
+        const originalFetch = window.fetch;
+        
+        // Define global as a proxy to window that ignores fetch assignment
+        window.global = new Proxy(window, {
+          set(target, prop, value) {
+            if (prop === 'fetch') {
+              // Ignore assignment to fetch on global
+              return true;
+            }
+            try {
+              target[prop] = value;
+            } catch (e) {
+              // Ignore errors for read-only properties on window
+            }
+            return true;
+          },
+          get(target, prop) {
+            if (prop === 'global') return window.global;
+            return target[prop];
+          }
+        });
+
+        // Try to make window.fetch writable or at least have a setter to prevent errors
+        try {
+          Object.defineProperty(window, 'fetch', {
+            get() { return originalFetch; },
+            set(v) { /* ignore */ },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // If we can't make it writable, we've already handled global.fetch via Proxy
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

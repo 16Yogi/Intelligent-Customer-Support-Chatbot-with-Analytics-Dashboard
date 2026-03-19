@@ -1,0 +1,8 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+SQLAlchemy==2.0.36
+# psycopg2-binary  # only if using PostgreSQL; install separately on Windows or use Docker
+python-dotenv==1.0.1
+python-multipart==0.0.9
+pydantic==2.9.2
+scikit-learn==1.5.2
